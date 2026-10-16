@@ -1,3 +1,4 @@
+
 # Copyright (c) 2024, Moataz M Hassan (Arkan Lab)
 # Developer Website: https://arkan.it.com
 # License: MIT
@@ -12,12 +13,17 @@ from frappe.model.document import Document
 
 class VLProperty(Document):
 	def validate(self):
-		if not self.abbreviation and self.property_name:
-			self.abbreviation = "".join(w[0].upper() for w in self.property_name.split()[:3])
+		if self.meta.has_field("abbreviation"):
+			if not self.abbreviation and self.property_name:
+				self.abbreviation = "".join(
+					w[0].upper() for w in self.property_name.split()[:3]
+				)
 
 	def get_room_summary(self):
 		"""Get room counts by status for this property."""
-		return frappe.get_all("VL Room",
+		return frappe.get_all(
+			"VL Room",
 			filters={"property": self.name},
 			fields=["room_status as status", "count(*) as count"],
-			group_by="room_status")
+			group_by="room_status",
+		)
