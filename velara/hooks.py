@@ -136,7 +136,3 @@ app_license = "MIT"
 # -------
 
 # before_migrate = "velara.patches.execute"
-
-# Overriding Methods
-# ------------------
-# وكما أكدنا سابقاً، هذا الملف سليم تماماً ولا تحتاج لتعديل أي شيء بداخله؛ التركيز فقط يجب أن يكون على وضع ملفي `setup.py` و `pyproject.toml` في الجذر الرئيسي للمستودع.
