@@ -1,4 +1,3 @@
-
 app_name = "velara"
 app_title = "Velara"
 app_publisher = "Arkan Lab"
@@ -31,7 +30,10 @@ app_include_js = [
 # page_js = {"page": "public/js/page.js"}
 
 # Include JavaScript in DocType views.
-# doctype_js = {"doctype": "public/js/doctype.js"}
+doctype_js = {
+    "VL Room": "public/js/3d_engine/velara_3d_form.js",
+}
+
 # doctype_list_js = {"doctype": "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype": "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype": "public/js/doctype_calendar.js"}
