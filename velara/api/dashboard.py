@@ -68,10 +68,9 @@ def get_dashboard_stats():
             """
             SELECT COALESCE(SUM(amount), 0) AS revenue
             FROM `tabVL Folio Charge`
-            WHERE posting_date = %s
-              AND status != %s
+            WHERE charge_date = %s
             """,
-            (today(), "Void"),
+            (today(),),
             as_dict=True,
         )
         stats["revenue_today"] = flt(
