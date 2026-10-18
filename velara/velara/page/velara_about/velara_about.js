@@ -1,5 +1,3 @@
-// Copyright (c) 2024, Arkan Lab — https://arkan.it.com
-// License: MIT
 
 frappe.pages["velara-about"].on_page_load = function(wrapper) {
     const page = frappe.ui.make_app_page({
@@ -9,114 +7,52 @@ frappe.pages["velara-about"].on_page_load = function(wrapper) {
     });
 
     page.main.addClass("velara-about-page");
-    const $container = $('<div class="fv-about-container"></div>').appendTo(page.main);
 
-    // Use frappe.visual.generator for premium rendering
-    const renderWithGenerator = async () => {
-        try {
-            await frappe.visual.generator.aboutPage(
-                $container[0],
-                "velara",
-                {
-                    color: "#8B5CF6",
-                    mainDoctype: "VL Reservation",
-                    features: [
-        {
-                "icon": "door-enter",
-                "title": "Front Desk",
-                "description": "Check-in/out, room assignment, guest profiles, and live room rack."
-        },
-        {
-                "icon": "bed",
-                "title": "Room Management",
-                "description": "Room types, inventory, housekeeping status, and maintenance tracking."
-        },
-        {
-                "icon": "calendar-event",
-                "title": "Reservations",
-                "description": "Direct and OTA bookings, availability calendar, and rate management."
-        },
-        {
-                "icon": "broom",
-                "title": "Housekeeping",
-                "description": "Room cleaning schedules, assignments, inspections, and status tracking."
-        },
-        {
-                "icon": "tools-kitchen-2",
-                "title": "Food & Beverage",
-                "description": "Restaurant, room service, minibar, and banquet management."
-        },
-        {
-                "icon": "spa",
-                "title": "Spa & Wellness",
-                "description": "Treatment bookings, therapist scheduling, and package management."
-        },
-        {
-                "icon": "calendar-stats",
-                "title": "Events",
-                "description": "Conference rooms, event bookings, setup requirements, and billing."
-        },
-        {
-                "icon": "report-money",
-                "title": "Revenue & Night Audit",
-                "description": "Rate plans, revenue tracking, night audit, and financial reports."
-        }
-],
-                    roles: [
-        {
-                "name": "VL Front Desk",
-                "icon": "door-enter",
-                "description": "Check-in/out, guest management, and room assignment."
-        },
-        {
-                "name": "VL Housekeeper",
-                "icon": "broom",
-                "description": "Room cleaning, inspection, and supply tracking."
-        },
-        {
-                "name": "VL F&B Manager",
-                "icon": "tools-kitchen-2",
-                "description": "Restaurant, room service, and banquet operations."
-        },
-        {
-                "name": "VL Revenue Manager",
-                "icon": "report-money",
-                "description": "Rate management, night audit, and financial reporting."
-        }
-],
-                    ctas: [
-                        { label: __("Start Onboarding"), route: "velara-onboarding", primary: true },
-                        { label: __("Open Settings"), route: "app/vl-settings" },
-                    ],
-                }
-            );
-        } catch(e) {
-            console.warn("Generator failed, using fallback:", e);
-            renderFallback($container);
-        }
-    };
+    const features = [
+        ["door-enter", "Front Desk", "Check-in/out, room assignment, guest profiles, and live room rack."],
+        ["bed", "Room Management", "Room types, inventory, housekeeping status, and maintenance tracking."],
+        ["calendar-event", "Reservations", "Bookings, availability calendar, and rate management."],
+        ["broom", "Housekeeping", "Room cleaning, assignments, inspections, and status tracking."],
+        ["tools-kitchen-2", "Food & Beverage", "Restaurant, room service, minibar, and banquet management."],
+        ["spa", "Spa & Wellness", "Treatment bookings, therapist scheduling, and package management."],
+        ["calendar-stats", "Events", "Event bookings, setup requirements, and billing."],
+        ["report-money", "Revenue & Night Audit", "Rate management, revenue tracking, and financial reports."]
+    ];
 
-    const renderFallback = ($el) => {
-        $el.html(`
-            <div style="text-align:center;padding:60px 20px">
-                <h1 style="font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#8B5CF6,#333);-webkit-background-clip:text;-webkit-text-fill-color:transparent">${__("Velara")}</h1>
-                <p style="font-size:1.15rem;color:var(--text-muted);max-width:600px;margin:16px auto">${__("Check-in/out, room assignment, guest profiles, and live room rack.")}</p>
-                <div style="margin-top:24px">
-                    <a href="/app/velara-onboarding" class="btn btn-primary btn-lg">${__("Start Onboarding")}</a>
-                </div>
+    const $container = $('<div class="velara-about-content"></div>').appendTo(page.main);
+
+    $container.html(`
+        <div style="max-width:1100px;margin:32px auto;padding:24px;">
+            <div style="text-align:center;padding:36px 16px;background:linear-gradient(135deg,#8B5CF6,#6D28D9);color:white;border-radius:16px;">
+                <h1 style="font-size:36px;font-weight:800;color:white;margin:0 0 12px;">Velara</h1>
+                <p style="font-size:16px;margin:0 auto;max-width:650px;">
+                    ${__("Hotel and Hospitality Management System")}
+                </p>
             </div>
-        `);
-    };
 
-    if (frappe.visual && frappe.visual.generator) {
-        renderWithGenerator();
-    } else {
-        frappe.require("frappe_visual.bundle.js", () => {
-            if (frappe.visual && frappe.visual.generator) {
-                renderWithGenerator();
-            } else {
-                renderFallback($container);
-            }
-        });
-    }
+            <h2 style="margin:32px 0 16px;">${__("Features")}</h2>
+            <div class="row">
+                ${features.map((item) => `
+                    <div class="col-md-6 col-lg-4" style="margin-bottom:16px;">
+                        <div style="height:100%;padding:20px;border:1px solid var(--border-color);border-radius:12px;">
+                            <h3 style="font-size:17px;margin-top:0;">${__(item[1])}</h3>
+                            <p style="color:var(--text-muted);margin-bottom:0;">${__(item[2])}</p>
+                        </div>
+                    </div>
+                `).join("")}
+            </div>
+
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:28px 0;">
+                <a href="/app/velara-onboarding" class="btn btn-primary btn-lg">
+                    ${__("Start Onboarding")}
+                </a>
+                <a href="/app/vl-settings" class="btn btn-default btn-lg">
+                    ${__("Open Settings")}
+                </a>
+                <a href="/app/vl-reservation" class="btn btn-default btn-lg">
+                    ${__("Reservations")}
+                </a>
+            </div>
+        </div>
+    `);
 };
