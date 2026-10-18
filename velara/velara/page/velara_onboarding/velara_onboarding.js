@@ -1,4 +1,5 @@
-// Copyright (c) 2026, Arkan Lab — https://arkan.it.com
+
+ // Copyright (c) 2026, Arkan Lab — https://arkan.it.com
 // License: MIT
 
 frappe.pages["velara-onboarding"].on_page_load = function (wrapper) {
@@ -130,7 +131,7 @@ class VelaraOnboarding {
                 ${this.stat_card("🛏️", __("Total Rooms"), "VL Room")}
                 ${this.stat_card("📋", __("Reservations"), "VL Reservation")}
                 ${this.stat_card("👤", __("Guests"), "VL Guest")}
-                ${this.stat_card("🧹", __("Housekeeping Tasks"), "VL Housekeeping Task")}
+                ${this.stat_card("🧹", __("Housekeeping Tasks"), "VL HK Task")}
             </div>
         `;
 
@@ -161,7 +162,7 @@ class VelaraOnboarding {
     }
 
     load_stat_counts() {
-        const doctypes = ["VL Room", "VL Reservation", "VL Guest", "VL Housekeeping Task"];
+        const doctypes = ["VL Room", "VL Reservation", "VL Guest", "VL HK Task"];
         doctypes.forEach((dt) => {
             frappe.xcall("frappe.client.get_count", { doctype: dt }).then((count) => {
                 $(`#stat-${dt.replace(/\s/g, '-')}`).text(count || 0);
